@@ -60,7 +60,7 @@ func main() {
 
 	app, srv, err := restinpieces.New(
 		restinpieces.WithZombiezenPool(dbPool), 
-		core.WithAgeKeyPath(*ageKeyPath),
+		restinpieces.WithAgeKeyPath(*ageKeyPath),
         // use default cache ristretto
         // use default router serveMux
         // use default slog logger Text
