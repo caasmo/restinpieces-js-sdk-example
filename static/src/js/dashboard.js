@@ -30,13 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     rp.refreshAuth()
       .then((response) => {
         if (response?.data?.access_token) {
-          // Save new auth data (preserving existing record)
-          const newAuth = {
-            ...currentAuth,
-            access_token: response.data.access_token,
-            expires_in: response.data.expires_in,
-          };
-          rp.store.auth.save(newAuth);
+          // The SDK now handles saving the auth data automatically.
+          const authData = rp.store.auth.load() || {};
+          const userInfo = authData.record || {};
 
           // Display new token and update UI
           document.getElementById("new-token").textContent =
@@ -47,12 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("previous-token").textContent =
             currentToken;
           // Update user info with any new data from refresh
-          const updatedUserInfo = {
-            ...userInfo,
-            ...(response.data.record || {}),
-          };
           document.getElementById("user-info").textContent =
-            JSON.stringify(updatedUserInfo, null, 2);
+            JSON.stringify(userInfo, null, 2);
         } else {
           throw new Error("No access token in response");
         }

@@ -89,15 +89,17 @@ class LoginHandler {
         password,
       });
 
-      if (response?.data?.access_token) {
-        this.rp.store.auth.save(response.data);
-        this.createSuccessUI(response.data.record);
-      } else {
-        throw new Error("Invalid login response: missing access token");
-      }
+      this.createSuccessUI(response.data.record);
     } catch (error) {
       console.error("Login failed:", error);
-      this.showMessage(error.response?.message || error.message, true);
+      this.showMessage(error.message, true);
+
+      // Directly consume formErrors to show field-level details
+      Object.entries(error.formErrors).forEach(([field, messages]) => {
+        const errorLine = document.createElement("div");
+        errorLine.textContent = `${field}: ${messages.join(", ")}`;
+        this.errorDiv.appendChild(errorLine);
+      });
     }
   }
 }

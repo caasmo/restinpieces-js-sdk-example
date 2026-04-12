@@ -20,8 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   rp.authWithOauth2(authRequest)
     .then((response) => {
-      if (response?.data?.access_token && response?.data?.record) {
-        rp.store.auth.save(response.data);
+      if (response?.data?.record) {
         showSuccess(response.data.record);
       } else {
         throw new Error("No access token in response data");

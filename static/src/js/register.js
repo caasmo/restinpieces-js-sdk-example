@@ -75,22 +75,19 @@ class RegisterForm {
           password_confirm: confirmPassword,
         })
         .then((response) => {
-          if (response.data?.access_token && response.data?.record) {
-            this.rp.store.auth.save(response.data);
-            this.showMessage("Registration successful!");
-            this.createSuccessUI(response.data.record);
-          } else {
-            throw new Error("Invalid registration response");
-          }
+          this.showMessage("Registration successful!");
+          this.createSuccessUI(response.data.record);
         })
         .catch((error) => {
           console.error("Registration failed:", error);
-          this.showMessage(
-            error.response
-              ? JSON.stringify(error.response, null, 2)
-              : error.message,
-            true,
-          );
+          this.showMessage(error.message, true);
+
+          // Directly consume formErrors to show field-level details
+          Object.entries(error.formErrors).forEach(([field, messages]) => {
+            const errorLine = document.createElement("div");
+            errorLine.textContent = `${field}: ${messages.join(", ")}`;
+            this.messageDiv.appendChild(errorLine);
+          });
         });
     } catch (error) {
       console.error("Validation failed:", error);

@@ -168,7 +168,13 @@ class Restinpieces {
   // --- Authentication Methods ---
 
   refreshAuth() {
-    return this.requestAuth("refresh_auth");
+    return this.requestAuth("refresh_auth")
+      .then((response) => {
+        if (response?.data?.access_token) {
+          this.store.auth.save(response.data);
+        }
+        return response;
+      });
   }
 
   listOauth2Providers() {
@@ -176,7 +182,13 @@ class Restinpieces {
   }
 
   registerWithPassword(body = null, headers = {}, signal = null) {
-    return this.request("register_with_password", {}, body, headers, signal);
+    return this.request("register_with_password", {}, body, headers, signal)
+      .then((response) => {
+        if (response?.data?.access_token) {
+          this.store.auth.save(response.data);
+        }
+        return response;
+      });
   }
 
   requestEmailVerification(body = null, headers = {}, signal = null) {
@@ -200,11 +212,23 @@ class Restinpieces {
   }
 
   authWithPassword(body = null, headers = {}, signal = null) {
-    return this.request("auth_with_password", {}, body, headers, signal);
+    return this.request("auth_with_password", {}, body, headers, signal)
+      .then((response) => {
+        if (response?.data?.access_token) {
+          this.store.auth.save(response.data);
+        }
+        return response;
+      });
   }
 
   authWithOauth2(body = null, headers = {}, signal = null) {
-    return this.request("auth_with_oauth2", {}, body, headers, signal);
+    return this.request("auth_with_oauth2", {}, body, headers, signal)
+      .then((response) => {
+        if (response?.data?.access_token) {
+          this.store.auth.save(response.data);
+        }
+        return response;
+      });
   }
 }
 

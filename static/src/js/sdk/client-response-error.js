@@ -20,7 +20,31 @@ export class ClientResponseError extends Error {
     this.response = errData?.response || {};
     this.name = "ClientResponseError " + this.status;
     this.message = this.response?.message; // Prioritize the server's message
-    this.code = this.response?.code || ""; // Prioritize the server's message
+    this.code = this.response?.code || "";
+    /**
+     * Field-level error details array from the API envelope.
+     * 
+     * Error response structure example:
+     * {
+     *   "status": 400,
+     *   "code": "invalid_input", // Machine-readable 
+     *   "message": "The request contains invalid data.", // Human-readable explanation
+     *   "data?": [ // optional details
+     *     {
+     *       "code": "max_length",        // Machine-readable issue type
+     *       "message": "Password exceeds maximum length of 20 characters", // Human-readable explanation
+     *       "param?": "password",          // The param causing the issue (optional if not field-specific)
+     *       "value?": "mypasswordiswaytoolong123", // Optional: the problematic input
+     *     },
+     *     {
+     *       "code": "required",
+     *       "message": "Username is required"
+     *       "param?": "username",
+     *     }
+     *   ]
+     * }
+     */
+    this.data = this.response?.data ?? [];
 
     if (!this.message) {
       if (this.isAbort) {
@@ -31,5 +55,23 @@ export class ClientResponseError extends Error {
         this.message = "Something went wrong while processing your request.";
       }
     }
+  }
+
+   /**
+   * Returns form validation errors grouped by input name, ready for form rendering.
+   *
+   * @returns {Record<string, string[]>} e.g. { password: ["Too short", "Requires number"] }
+   */
+  get formErrors() {
+    const errors = {};
+
+    for (const err of this.data) {
+      if (err.param) {
+        errors[err.param] ??= [];
+        errors[err.param].push(err.message);
+      }
+    }
+
+    return errors;
   }
 }
