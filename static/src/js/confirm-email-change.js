@@ -1,4 +1,4 @@
-import Restinpieces from "./sdk/restinpieces.js";
+import Restinpieces from "restinpieces";
 
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);

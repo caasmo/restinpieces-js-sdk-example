@@ -1,4 +1,4 @@
-import Restinpieces from "./sdk/restinpieces.js";
+import Restinpieces from "restinpieces";
 
 class LoginHandler {
   constructor() {

@@ -1,4 +1,4 @@
-import Restinpieces from "./sdk/restinpieces.js";
+import Restinpieces from "restinpieces";
 
 const rp = new Restinpieces();
 rp.store.auth.save(null);

@@ -1,0 +1,9 @@
+{
+  "name": "restinpieces",
+  "version": "0.5.0",
+  "type": "module",
+  "main": "./restinpieces.js",
+  "exports": {
+    ".": "./restinpieces.js"
+  }
+}

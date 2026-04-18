@@ -9,3 +9,4 @@
 
 # Ignore built assets
 static/dist
+node_modules/
