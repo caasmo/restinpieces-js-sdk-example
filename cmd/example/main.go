@@ -1,7 +1,6 @@
 package main
 
 import (
-	"embed"
 	"flag"
 	"io/fs"
 	"log/slog"
@@ -10,10 +9,6 @@ import (
 	"fmt"
 
 	"github.com/caasmo/restinpieces"
-
-	//"github.com/caasmo/restinpieces/custom"
-
-	// TODO
 	"github.com/caasmo/restinpieces/core"
 	r "github.com/caasmo/restinpieces/router"
     "github.com/caasmo/restinpieces-js-sdk-example/web"
@@ -68,7 +63,7 @@ func main() {
 	}
 
 	// Serve static files from configured public directory
-	cfg := app.Config()
+	//cfg := app.Config()
 	//subFS, err := fs.Sub(EmbeddedAssets, cfg.PublicDir)
 	subFS, err := fs.Sub(web.Assets, "dist")
 	if err != nil {

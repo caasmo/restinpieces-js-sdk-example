@@ -12,6 +12,7 @@ require (
 	github.com/dgraph-io/ristretto/v2 v2.2.0 // indirect
 	github.com/domodwyer/mailyak/v3 v3.6.2 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/evanw/esbuild v0.28.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/keilerkonzept/topk v1.1.4 // indirect
@@ -26,6 +27,7 @@ require (
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	golang.org/x/crypto v0.50.0 // indirect
 	golang.org/x/exp v0.0.0-20250408133849-7e4ce0ab07d0 // indirect
+	golang.org/x/net v0.53.0 // indirect
 	golang.org/x/oauth2 v0.29.0 // indirect
 	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/sys v0.43.0 // indirect
@@ -37,3 +39,5 @@ require (
 	modernc.org/sqlite v1.37.1 // indirect
 	zombiezen.com/go/sqlite v1.4.2 // indirect
 )
+
+replace github.com/caasmo/restinpieces => ../restinpieces
