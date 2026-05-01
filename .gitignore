@@ -8,5 +8,5 @@
 .aider*
 
 # Ignore built assets
-static/dist
+web/dist
 node_modules/

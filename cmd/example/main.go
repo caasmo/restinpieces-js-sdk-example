@@ -1,7 +1,5 @@
 package main
 
-//go:generate go run gen/gogenerate-assets.go -baseDir static
-
 import (
 	"embed"
 	"flag"
@@ -18,10 +16,9 @@ import (
 	// TODO
 	"github.com/caasmo/restinpieces/core"
 	r "github.com/caasmo/restinpieces/router"
+    "github.com/caasmo/restinpieces-js-sdk-example/web"
 )
 
-//go:embed static/dist/*
-var EmbeddedAssets embed.FS // move to embed.go
 
 func main() {
 	// Define flags directly in main
@@ -72,7 +69,8 @@ func main() {
 
 	// Serve static files from configured public directory
 	cfg := app.Config()
-	subFS, err := fs.Sub(EmbeddedAssets, cfg.PublicDir)
+	//subFS, err := fs.Sub(EmbeddedAssets, cfg.PublicDir)
+	subFS, err := fs.Sub(web.Assets, "dist")
 	if err != nil {
 		// TODO
 		panic("failed to create sub filesystem: " + err.Error())
