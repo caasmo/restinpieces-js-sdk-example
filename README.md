@@ -1,4 +1,8 @@
 
+# RestInPieces JS SDK Example
+
+This project serves as a comprehensive example of how to integrate the RestInPieces JS SDK within a Go-based web application. It demonstrates a typical project structure that bundles a modern frontend with a Go backend into a single, self-contained binary.
+
 ## Standard Layout
 
 This project follows a standard Go and frontend integration layout, designed to produce a self-contained binary.
@@ -18,12 +22,17 @@ The `web/` directory contains the complete frontend environment:
   subFS, err := fs.Sub(web.Assets, "dist")
   ```
 
-### Asset Generation
+## Asset Generation
 To bundle and optimize frontend assets (HTML, CSS, JavaScript) with minification and gzip compression:
 
     go generate ./web/
 
-This creates production-ready assets in `public/dist/` with both compressed (.gz) and uncompressed versions.
+This creates production-ready assets in `web/dist/` with both compressed (.gz) and uncompressed versions.
+
+### Custom Builder
+While modern frontend projects typically rely on external build tools like Vite or Webpack, this repository demonstrates a **custom builder** approach. 
+
+The build logic is implemented in Go using the [esbuild](https://github.com/evanw/esbuild) library, located at `gen/gogenerate-assets.go`. This integration allows the frontend build process to be tightly coupled with the Go toolchain, enabling a seamless `go generate` workflow without requiring a global installation of Node-based build tools for the final production bundling.
 
 ## Run
 
