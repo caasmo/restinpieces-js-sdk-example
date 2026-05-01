@@ -84,22 +84,37 @@ class LoginHandler {
     this.showMessage("Logging in...");
 
     try {
-      const response = await this.rp.authWithPassword({
-        identity: email,
+      const result = await this.rp.authWithPassword({
+        email,
         password,
       });
 
-      this.createSuccessUI(response.data.record);
+      if (result === null) {
+        // TODO revome null???? sdk is wrong
+        // Success: the SDK already saved the auth data to storage
+        const authData = this.rp.store.auth.load();
+        this.createSuccessUI(authData.record);
+      } else {
+        // OTP required: redirect to verification page with the context
+        sessionStorage.setItem("otp_email", result.email);
+        sessionStorage.setItem("otp_token", result.verificationToken);
+        this.showMessage("Email verification required. Redirecting...");
+        setTimeout(() => {
+          window.location.href = "/confirm-email-verification.html";
+        }, 1500);
+      }
     } catch (error) {
       console.error("Login failed:", error);
       this.showMessage(error.message, true);
 
       // Directly consume formErrors to show field-level details
-      Object.entries(error.formErrors).forEach(([field, messages]) => {
-        const errorLine = document.createElement("div");
-        errorLine.textContent = `${field}: ${messages.join(", ")}`;
-        this.errorDiv.appendChild(errorLine);
-      });
+      if (error.formErrors) {
+        Object.entries(error.formErrors).forEach(([field, messages]) => {
+          const errorLine = document.createElement("div");
+          errorLine.textContent = `${field}: ${messages.join(", ")}`;
+          this.errorDiv.appendChild(errorLine);
+        });
+      }
     }
   }
 }

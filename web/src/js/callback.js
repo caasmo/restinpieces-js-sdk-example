@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const authRequest = {
     provider: provider.name,
     code: params.get("code"),
+    state: params.get("state"),
     code_verifier: provider.codeVerifier,
     redirect_uri: provider.redirectURL,
   };
